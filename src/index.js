@@ -21,6 +21,7 @@ function AdminFunctions()
 
 function UserFunctions()
 {
+    const allFilmsDiv = document.getElementById('allFilmsDiv');
     return(
         <div className='userFunc text'>
             <div className='rndFilm text'>
@@ -30,7 +31,21 @@ function UserFunctions()
             </div>
             <div className='allFilms text'>
                 All Films <br></br>
-                {DrawAllFilms()}
+                <button onClick={function()
+                {
+                    allFilmsDiv.hidden = !allFilmsDiv.hidden;
+                }}>
+                    Click to Toggle All Films
+                </button>
+
+                <div id="allFilmsDiv" hidden>{DrawAllFilms()}</div>
+            </div>
+            <hr></hr>
+            <div className='searchFilm text'>
+                Search For Films
+                <br></br>
+                {SearchByTitle()}
+                {DrawSearch(SearchForm.url)}
             </div>
         </div>
     )
@@ -51,31 +66,102 @@ function DrawRndFilm()
     );
 }
 
-function DrawAllFilms()
+function SearchByTitle()
 {
-    const allFilms = GetAPIs('http://localhost:8080/films/');
-    let reternStr = ``;
+    // return(
+    //     <form>
+    //         <select>
+    //             <option defaultValue value ="byTitle">Search by Title</option>
+    //             <option value="byDescription">Search by Description</option>
+    //         </select>
+    //         <input type="text" id="Search"></input>
+    //         <button>Search</button>
+    //     </form>
+      
+    // )
+    return(
+        <div>{SearchForm()}</div>
+    );
+}
 
-    for(let c = 0; c < allFilms.myJson.length; c++)
+function SearchForm()
+{
+    const [searchType, setSearchType] = useState("byTitle");
+    const [search, setSearch] = useState("");
+    const baseUrl = 'http://localhost:8080/films/';
+    const [url, setUrl] = useState(baseUrl);
+    let myUrl = baseUrl
+
+    const handleSubmit = e =>
     {
-        console.log(`C: ${c}, Tille: ${allFilms.myJson.at(c).filmTitle}, Discription: ${allFilms.myJson.at(c).filmDescription}, ID: ${allFilms.myJson.at(c).filmID}`);
-
-        reternStr += `<div>
-                        <p> 
-                            Film: ${allFilms.myJson.at(c).filmTitle}
-                            <br>
-                            Discription: ${allFilms.myJson.at(c).filmDescription}
-                        </p>
-                    </div>`
-        if (c == allFilms.myJson.length - 1)
-        {
-            reternStr += `<hr>`
-        } else{
-            reternStr += '<br>'
-        }
+        console.log(`type: ${searchType}, search: ${search}`)
+        myUrl = baseUrl + searchType + "/" + search;
+        console.log(myUrl);
+        setUrl(myUrl);
     }
 
-    return(<div>{parse(reternStr)}</div>)
+    const handleChangeType = e =>{
+        setSearchType(e.target.value);
+    }
+
+    const handelChangeSearch = e =>{
+        setSearch(e.target.value);
+    }
+
+
+    return(
+        <form onSubmit={handleSubmit}>
+            <select onChange={handleChangeType}>
+                <option defaultValue
+                value ="byTitle"
+                >
+                    Search by Title
+                </option>
+                <option value="byDescription"
+                >
+                    Search by Description
+                </option>
+            </select>
+            <input type="text" id="Search" onChange={handelChangeSearch}></input>
+            <input type="submit" />
+        </form>
+    )
+}
+
+function DrawSearch(myUrl)
+{
+    console.log(`Draw: ${SearchForm.url}`)
+}
+
+function DrawAllFilms()
+{
+    const filmsStr = DrawManyFilms('http://localhost:8080/films/');
+
+    return(<div>{parse(filmsStr)}</div>)
+}
+
+
+function DrawManyFilms(url)
+{
+    const manyFilms = GetAPIs(url);
+    let reternStr = ``;
+
+    for(let c = 0; c < manyFilms.myJson.length; c++)
+    {
+        reternStr += `<div className="Film${manyFilms.myJson.at(c).filmID} text">
+                        <p> 
+                            Film: ${manyFilms.myJson.at(c).filmTitle}
+                            <br>
+                            Discription: ${manyFilms.myJson.at(c).filmDescription}
+                        </p>
+                    </div>`
+        if (c != manyFilms.myJson.length - 1)
+        {
+            reternStr += '<br>'
+        } 
+    }
+
+    return(reternStr);
 }
 
 function GetAPIs(url)
@@ -85,8 +171,6 @@ function GetAPIs(url)
     const getAPI = async () =>{
         const res = await fetch(url);
         const responce = await res.json();
-
-        console.log(responce);
 
         setJson(responce);
     }
