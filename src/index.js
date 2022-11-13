@@ -30,7 +30,7 @@ function UserFunctions()
             </div>
             <div className='allFilms text'>
                 All Films <br></br>
-                {DrawAllFilmsStandalone()}
+                {DrawAllFilms()}
             </div>
         </div>
     )
@@ -50,58 +50,33 @@ function DrawRndFilm()
     );
 }
 
-function DrawAllFilmsStandalone()
-{
-    const url = 'http://localhost:8080/films/'
-    const [myJson, setJson] = useState("");
-    let reternStr = ``;
-
-    const getAPI = async () =>{
-        const res = await fetch(url);
-        const responce = await res.json();
-
-        console.log(responce);
-
-        setJson(responce);
-    }
-
-    useEffect(() =>
-    {
-        try
-        {
-            getAPI();
-        }
-        catch(err)
-        {
-            console.log(err);
-        }
-       
-    },[])
-
-    console.log(myJson.at(0))
-
-    for (let c = 0; c < myJson.length; c++)
-    {
-        reternStr += `<div>
-                        <p>Film: ${myJson.at(c).filmTitle}</p>
-                        <p>Discription: ${myJson.at(c).filmDescription}</p>`
-        if(c != myJson.length - 1)
-        {
-            reternStr += `<br></br></div>`
-        }else
-        {
-            reternStr += `</div><hr></hr>`
-        }
-    }
-
-   return(<div>{parse(reternStr)}</div>);
-
-}
-
 function DrawAllFilms()
 {
-    
+    const allFilms = GetAPIs('http://localhost:8080/films/');
+    let reternStr = ``;
+
+    for(let c = 0; c < allFilms.myJson.length; c++)
+    {
+        console.log(`C: ${c}, Tille: ${allFilms.myJson.at(c).filmTitle}, Discription: ${allFilms.myJson.at(c).filmDescription}, ID: ${allFilms.myJson.at(c).filmID}`);
+
+        reternStr += `<div>
+                        <p> 
+                            Film: ${allFilms.myJson.at(c).filmTitle}
+                            <br></br>
+                            Discription: ${allFilms.myJson.at(c).filmDescription}
+                        </p>
+                    </div>`
+        if (c == allFilms.myJson.length - 1)
+        {
+            reternStr += `<hr>`
+        } else{
+            reternStr += '<br>'
+        }
+    }
+
+    return(<div>{parse(reternStr)}</div>)
 }
+
 
 function DrawKanya()
 {
