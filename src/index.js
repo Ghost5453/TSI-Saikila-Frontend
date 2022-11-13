@@ -42,10 +42,11 @@ function DrawRndFilm()
 
     return(
         <div>
-            <br></br>
-            Film: {filmJson.myJson.filmTitle}
-            <br></br>
-            Discription: {filmJson.myJson.filmDescription}
+            <p>
+                Film: {filmJson.myJson.filmTitle}
+                <br></br>
+                Discription: {filmJson.myJson.filmDescription}
+            </p>
         </div>
     );
 }
@@ -62,7 +63,7 @@ function DrawAllFilms()
         reternStr += `<div>
                         <p> 
                             Film: ${allFilms.myJson.at(c).filmTitle}
-                            <br></br>
+                            <br>
                             Discription: ${allFilms.myJson.at(c).filmDescription}
                         </p>
                     </div>`
@@ -75,19 +76,6 @@ function DrawAllFilms()
     }
 
     return(<div>{parse(reternStr)}</div>)
-}
-
-
-function DrawKanya()
-{
-    const myAPI = GetAPIs('https://api.kanye.rest');
-    
-    return(
-        <div>
-            <br></br>
-            Kanye: {myAPI.myJson.quote}
-        </div>
-    )
 }
 
 function GetAPIs(url)
@@ -120,35 +108,6 @@ function GetAPIs(url)
         {myJson}
     )
 }
-
-function GetManyAPIs(url)
-{
-    const [myJson, setJson] = useState("");
-
-    const getAPI = async () =>{
-        const res = await fetch(url);
-        const responce = await JSON.parse(res.json());
-
-        setJson(responce);
-    }
-
-    useEffect(() =>
-    {
-        try{
-            getAPI();
-        }catch(err)
-        {
-            console.log(err);
-        }
-       
-    },[])
-
-    return(
-        {myJson}
-    )
-}
-
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
