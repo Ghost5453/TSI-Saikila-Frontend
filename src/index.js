@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {useEffect} from 'react';
 import {useState} from 'react';
-import parse from "html-react-parser";
+import parse from 'html-react-parser';
 
 function FullPage()
 {
@@ -45,7 +45,6 @@ function UserFunctions()
                 Search For Films
                 <br></br>
                 {SearchByTitle()}
-                {DrawSearch(SearchForm.url)}
             </div>
         </div>
     )
@@ -68,20 +67,87 @@ function DrawRndFilm()
 
 function SearchByTitle()
 {
-    // return(
-    //     <form>
-    //         <select>
-    //             <option defaultValue value ="byTitle">Search by Title</option>
-    //             <option value="byDescription">Search by Description</option>
-    //         </select>
-    //         <input type="text" id="Search"></input>
-    //         <button>Search</button>
-    //     </form>
-      
-    // )
+    
     return(
-        <div>{SearchForm()}</div>
+        <div>{NewSearch()}</div>
     );
+}
+
+function NewSearch()
+{
+    const [change, setChange] = useState(false);
+    let url = "";
+    let submited = false;
+    let objStr = "";
+
+    const urlChange = (event) =>{
+        url = event;
+    }
+
+    const hasChanged = () =>{
+        setChange(true);
+        alert(`triggerd has changed Change: ${change}`);
+    }
+
+    if(change)
+    {
+        objStr = DrawManyFilms(url);
+        submited = true;
+        change = false;
+        console.log(`After change obj: ${objStr}`)
+        const divParcedObjStr = document.getElementById('parsedObjStrDiv');
+        divParcedObjStr.hidden = !submited;
+        alert("has changed");
+    }
+
+    // is very broken
+    return(
+        <div id='parsedObjStrDiv'>{parse(objStr)}</div>,
+        <div>{NewSearchForm(urlChange, hasChanged)}</div>
+    )
+}
+
+function NewSearchForm(changeUrlEvent, callChange)
+{
+    const baseUrl = 'http://localhost:8080/films/';
+    let search = "";
+    let searchType = "byTitle";
+    let myUrl = baseUrl;
+
+    const handleChangeType = e =>
+    {
+        searchType = e.target.value;
+    }
+
+    const handelChangeSearch = e =>
+    {
+        search = e.target.value;
+    }
+
+    const handleSubmit = e =>
+    {
+        myUrl = baseUrl + searchType + "/" + search;
+        callChange();
+        changeUrlEvent(myUrl);
+    }
+
+    return(
+        <form onSubmit={handleSubmit}>
+            <select onChange={handleChangeType}>
+                <option defaultValue
+                value ="byTitle"
+                >
+                    Search by Title
+                </option>
+                <option value="byDescription"
+                >
+                    Search by Description
+                </option>
+            </select>
+            <input type="text" id="Search" onChange={handelChangeSearch}></input>
+            <input type="submit" />
+        </form>
+    ); 
 }
 
 function SearchForm()
@@ -90,14 +156,17 @@ function SearchForm()
     const [search, setSearch] = useState("");
     const baseUrl = 'http://localhost:8080/films/';
     const [url, setUrl] = useState(baseUrl);
+    const [runDraw, setDraw] = useState(false);
     let myUrl = baseUrl
 
     const handleSubmit = e =>
     {
         console.log(`type: ${searchType}, search: ${search}`)
         myUrl = baseUrl + searchType + "/" + search;
-        console.log(myUrl);
+        console.log(`Search Form: ${myUrl}`);
+        alert("Step 1");
         setUrl(myUrl);
+        setDraw(true);
     }
 
     const handleChangeType = e =>{
@@ -107,7 +176,6 @@ function SearchForm()
     const handelChangeSearch = e =>{
         setSearch(e.target.value);
     }
-
 
     return(
         <form onSubmit={handleSubmit}>
@@ -128,9 +196,37 @@ function SearchForm()
     )
 }
 
-function DrawSearch(myUrl)
+function DrawSearch()
 {
+    let url;
+    let myObjStr;
+    let show = false;
     console.log(`Draw: ${SearchForm.url}`)
+    alert("Step 2");
+    if(SearchForm.runDraw)
+    {
+        alert("step 3");
+        url = SearchForm.url;
+        myObjStr = DrawManyFilms(url);
+        console.length(myObjStr);
+        show = true;
+    }
+
+    if (show)
+    {
+        alert("step 4 true")
+        SearchForm.runDraw = false;
+        console.log("Now showing");
+        return(
+            <div className='form text'>{SearchForm()}</div>,
+            <div className='chosenList text'>{parse(myObjStr)}</div>
+        );
+    }else{
+        alert("step 4 false")
+        return(
+            <div className='form text'>{SearchForm()}</div>
+        );
+    }
 }
 
 function DrawAllFilms()
