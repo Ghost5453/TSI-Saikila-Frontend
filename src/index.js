@@ -6,14 +6,14 @@ import { useRef } from 'react';
 
 function FullPage()
 {
-    const[search, setSerch] = useState("");
+    const[search, setSerch] = useState("http://localhost:8080/films/");
     const searchBox = useRef();
     const baceUrl = "http://localhost:8080/films/all/"
-    let myUrl;
+    let myUrl = "http://localhost:8080/films/";
 
     const handlChange = e =>
     {
-        if (e.target.value == "")
+        if (e.target.value === "")
         {
             myUrl = "http://localhost:8080/films/"
         } else
