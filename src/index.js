@@ -2,14 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {useEffect} from 'react';
 import {useState} from 'react';
-import { useRef } from 'react';
 
 function FullPage()
 {
-    const[search, setSerch] = useState("http://localhost:8080/films/");
-    const searchBox = useRef();
+    const[search, setSerch] = useState("");
+    const[update, setUpdate] = useState(false);
     const baceUrl = "http://localhost:8080/films/all/"
     let myUrl = "http://localhost:8080/films/";
+
+    const changeUpdate = () =>{
+        setUpdate(false);
+    }
 
     const handlChange = e =>
     {
@@ -21,17 +24,18 @@ function FullPage()
             myUrl = baceUrl + e.target.value
         }
         
+        setUpdate(true);
         setSerch(myUrl);
     }
 
     return(
     <div>
-         <input type="text" ref={searchBox} onChange={handlChange}></input>
-         <div>{GetAPIs(search)}</div>
+         <input type="text" onChange={handlChange}></input>
+         <div>{GetAPIs(search, update, changeUpdate)}</div>
     </div>)
 }
 
-function GetAPIs(url)
+function GetAPIs(url, myUpdate, myChangeUpdate)
 {
     console.log(`in get api ${url}`);
     const [myJson, setJson] = useState([]);
@@ -51,17 +55,23 @@ function GetAPIs(url)
 
     useEffect(() =>
     {
-        try
+        if(myUpdate)
         {
-            console.log("in try")
-            getAPI();
-        }
-        catch(err)
-        {
-            console.log(err);
+            try
+            {
+                console.log("in try")
+                getAPI();
+                myChangeUpdate();
+            }
+            catch(err)
+            {
+                console.log(err);
+            }
+
         }
        
-    },[])
+       
+    },[myUpdate])
 
     return(
         <div>
