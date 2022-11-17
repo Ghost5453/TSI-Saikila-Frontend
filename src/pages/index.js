@@ -5,9 +5,11 @@ const Home = () =>
 {
     console.log("Home (Pages)");
     return(
-        <div className="text contentBody">
-            <p>Test Home Page</p>
-        </div>
+        <center>
+            <div className="text contentBody">
+                <p>Test Home Page</p>
+            </div>
+        </center> 
     )
 }
 

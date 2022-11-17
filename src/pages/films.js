@@ -5,9 +5,11 @@ const Films = () =>
 {
     console.log("Films");
     return(
-        <div className="text contentBody">
-            <p>Test Films Page</p>
-        </div>
+        <center>
+            <div className="text contentBody">
+                <p>Test Films Page</p>
+            </div>
+        </center> 
     )
 }
 

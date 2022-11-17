@@ -5,9 +5,11 @@ const Actors = () =>
 {
     console.log("Actors");
     return(
-        <div className="text contentBody">
-            <p>Test Actors Page</p>
-        </div>
+        <center>
+            <div className="text contentBody">
+                <p>Test Actor Page</p>
+            </div>
+        </center>
     )
 }
 

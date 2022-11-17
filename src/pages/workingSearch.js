@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import {useEffect} from 'react';
 import {useState} from 'react';
+import '../App.css';
 
-function Search()
+function FullPage()
 {
     const[search, setSerch] = useState("");
     const[update, setUpdate] = useState(false);
@@ -70,6 +70,17 @@ function GetAPIs(url)
         ))}
         </div>
         
+    )
+}
+
+function Search()
+{
+    return(
+        <center>
+            <div className="text contentBody">
+                {FullPage()}
+            </div>
+        </center>
     )
 }
 
