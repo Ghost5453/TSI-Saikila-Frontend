@@ -6,13 +6,8 @@ import '../App.css';
 function FullPage()
 {
     const[search, setSerch] = useState("");
-    const[update, setUpdate] = useState(false);
     const baceUrl = "https://sakila-project-1668683367159.azurewebsites.net/films/all/"
     let myUrl = "https://sakila-project-1668683367159.azurewebsites.net/films";
-
-    const changeUpdate = () =>{
-        setUpdate(false);
-    }
 
     const handlChange = e =>
     {
@@ -23,15 +18,16 @@ function FullPage()
         {
             myUrl = baceUrl + e.target.value
         }
-        
-        setUpdate(true);
+
         setSerch(myUrl);
     }
 
     return(
     <div>
-         <input type="text" onChange={handlChange}></input>
-         <div>{GetAPIs(search, update, changeUpdate)}</div>
+        <h1 className='title'><u>Find a Film</u></h1>
+        <input type="text" onChange={handlChange} id='searchBoxFilm' size={100}></input>
+        <p className='text'>Searches can take some time so, please be patient</p>
+        <div>{GetAPIs(search)}</div>
     </div>)
 }
 
@@ -61,11 +57,14 @@ function GetAPIs(url)
     return(
         <div>
             {myJson.map((film) =>(
-            <div>
-                <p>
-                    Film: {film.filmTitle} <br></br>
-                    Discription: {film.filmDescription}
-                </p>
+            <div className={`film${film.filmID}`}>
+                <br></br>
+                <h2 className='titleS'>
+                    {film.filmTitle}
+                </h2>
+                <div className='text'>
+                    {film.filmDescription}
+                </div>
             </div>
         ))}
         </div>

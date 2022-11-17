@@ -1,11 +1,35 @@
 body{
-    background-color: #3066BE;
+    background-color: #666A86;
 }
 
 .contentBody{
-    background: #AEECEF;
+    background: #E8DDB5;
     display: flex;
     justify-content: center;
     align-self: center;
     width: 40%;
+    padding: 10px;
+}
+
+#searchBoxFilm{
+    width: 35%;
+}
+
+.text{
+    font-size: 20px;
+}
+
+.title{
+    color: #666A86;
+    font-size: 40px;
+}
+
+.titleS{
+    color: #666A86;
+    font-size: 27px;
+}
+
+input[type="text"]
+{
+    font-size: 20px;
 }

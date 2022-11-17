@@ -1,15 +1,24 @@
 import React from "react";
 import "../App.css";
 
-const Home = () =>
+
+function FullPage()
 {
-    console.log("Home (Pages)");
+    return(
+        <div>
+            <h1 className="title"><u>Adam's Sakila Project</u></h1>
+        </div>
+    )
+}
+
+function Home()
+{
     return(
         <center>
-            <div className="text contentBody">
-                <p>Test Home Page</p>
+            <div className="contentBody">
+                {FullPage()}
             </div>
-        </center> 
+        </center>
     )
 }
 

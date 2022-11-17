@@ -1,4 +1,5 @@
 import React from "react";
+import "../../App.css"
 import {
     Nav,
     NavLink,
@@ -13,20 +14,14 @@ const Navbar = () => {
                 <Bars />
 
                 <NavMenu>
-                    <NavLink to = "/">
+                    <NavLink to = "/" className="text">
                         Home
                     </NavLink>
-                    <NavLink to = "/about">
-                        About
-                    </NavLink>
-                    <NavLink to ="/actors">
+                    <NavLink to ="/actors" className="text">
                         Actors
                     </NavLink>
-                    <NavLink to ="/films">
+                    <NavLink to ="/films" className="text">
                         Films
-                    </NavLink>
-                    <NavLink to ="/workingSearch">
-                        Search 
                     </NavLink>
                 </NavMenu>
             </Nav>
