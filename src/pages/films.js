@@ -1,9 +1,11 @@
 import React from "react";
+import "../App.css";
 
 const Films = () =>
 {
+    console.log("Films");
     return(
-        <div>
+        <div className="text contentBody">
             <p>Test Films Page</p>
         </div>
     )

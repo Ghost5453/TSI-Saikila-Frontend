@@ -1,0 +1,11 @@
+body{
+    background-color: #3066BE;
+}
+
+.contentBody{
+    background: #AEECEF;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 20%;
+}

@@ -22,6 +22,9 @@ const Navbar = () => {
                     <NavLink to ="/films">
                         Films
                     </NavLink>
+                    <NavLink to ="/workingSearch">
+                        Search 
+                    </NavLink>
                 </NavMenu>
             </Nav>
         </div>

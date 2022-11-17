@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import {useEffect} from 'react';
 import {useState} from 'react';
 
-function FullPage()
+function Search()
 {
     const[search, setSerch] = useState("");
     const[update, setUpdate] = useState(false);
-    const baceUrl = "http://localhost:8080/films/all/"
-    let myUrl = "http://localhost:8080/films/";
+    const baceUrl = "https://sakila-project-1668683367159.azurewebsites.net/films/all/"
+    let myUrl = "https://sakila-project-1668683367159.azurewebsites.net/films";
 
     const changeUpdate = () =>{
         setUpdate(false);
@@ -18,7 +18,7 @@ function FullPage()
     {
         if (e.target.value === "")
         {
-            myUrl = "http://localhost:8080/films/"
+            myUrl = "https://sakila-project-1668683367159.azurewebsites.net/films"
         } else
         {
             myUrl = baceUrl + e.target.value
@@ -35,43 +35,28 @@ function FullPage()
     </div>)
 }
 
-function GetAPIs(url, myUpdate, myChangeUpdate)
+function GetAPIs(url)
 {
-    console.log(`in get api ${url}`);
     const [myJson, setJson] = useState([]);
 
     const getAPI = async () =>{
-        console.log("in async");
-        console.log(`url async: ${url}`);
         const res = await fetch(url);
-        console.log(res);
         const responce = await res.json();
-        console.log(responce);
-
-        console.log("got responce");
 
         setJson(responce);
     }
 
     useEffect(() =>
     {
-        if(myUpdate)
+        try
         {
-            try
-            {
-                console.log("in try")
-                getAPI();
-                myChangeUpdate();
-            }
-            catch(err)
-            {
-                console.log(err);
-            }
-
+            getAPI();
         }
-       
-       
-    },[myUpdate])
+        catch(err)
+        {
+            console.log(err);
+        }
+    },[url])
 
     return(
         <div>
@@ -88,7 +73,4 @@ function GetAPIs(url, myUpdate, myChangeUpdate)
     )
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(
-    <FullPage />
-);
+export default Search;
