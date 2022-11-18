@@ -15,6 +15,10 @@ body{
     width: 35%;
 }
 
+#searchBoxActors{
+    width: 35%;
+}
+
 .text{
     font-size: 20px;
 }

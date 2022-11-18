@@ -28,6 +28,7 @@ function FullPage()
         <input type="text" onChange={handlChange} id='searchBoxFilm' size={100}></input>
         <p className='text'>
         You can search for the films by title or film description. <br></br>
+        It will search automatically as you type.<br></br>
         Searches can take some time so, please be patient.
         </p>
         <div>{GetAPIs(search)}</div>

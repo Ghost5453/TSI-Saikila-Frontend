@@ -25,9 +25,10 @@ function FullPage()
     return(
     <div>
         <h1 className='title'><u>Find an Actor</u></h1>
-        <input type="text" onChange={handlChange} id='searchBoxFilm' size={100}></input>
+        <input type="text" onChange={handlChange} id='searchBoxActors' size={100}></input>
         <p className='text'>
-            You can search for actors by ether there first or last name.<br></br>
+            You can actors by ether there first or last name by typing in the box.<br></br>
+            It will search automatically as you type.<br></br>
             Searches can take some time so, please be patient.
         </p>
         <div>{GetAPIs(search)}</div>
